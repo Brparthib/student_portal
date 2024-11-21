@@ -1,0 +1,29 @@
+{% extends "portal/base.html" %}
+{% block content %}
+<div class="dashboard">
+    <h2>Student Dashboard</h2>
+    <div class="section">
+        <h3>Your Attendance Records</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Faculty</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in attendance_records %}
+                <tr>
+                    <td>{{ record.lecture.subject }}</td>
+                    <td>{{ record.lecture.faculty.username }}</td>
+                    <td>{{ record.lecture.time }}</td>
+                    <td>{{ record.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

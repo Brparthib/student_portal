@@ -1,0 +1,83 @@
+{% extends "portal/base.html" %}
+{% block content %}
+<div class="dashboard">
+    <h2>Admin Dashboard</h2>
+
+    <!-- All Users Section -->
+    <div class="section">
+        <h3>All Users</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.get_role_display }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Lectures Section -->
+    <div class="section">
+        <h3>Lectures</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Faculty</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lecture in lectures %}
+                <tr>
+                    <td>{{ lecture.subject }}</td>
+                    <td>{{ lecture.faculty.username }}</td>
+                    <td>{{ lecture.time }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- All Attendance Records Section -->
+    <div class="section">
+        <h3>All Attendance Records</h3>
+        {% for lecture in lectures %}
+        <h4>Subject: {{ lecture.subject }}</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Status</th>
+                    <th>Lecture Date and Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in attendance_records %}
+                    {% if record.lecture == lecture %}
+                    <tr>
+                        <td>{{ record.student.username }}</td>
+                        <td>{{ record.status }}</td>
+                        <td>{{ record.lecture.time|date:"d M Y, H:i" }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        {% empty %}
+        <p>No attendance records available for this lecture.</p>
+        {% endfor %}
+    </div>
+      
+</div>
+{% endblock %}
